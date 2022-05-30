@@ -14,12 +14,17 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return 'DigitalCert API running on ' . $router->app->version();
 });
 $router->get('/ping', function () {
     return response('', 204);
 });
 
+$router->get('/node', 'Controller@readNode');
+
+$router->group(['prefix' => 'certificate/contract'], function () use ($router) {
+    $router->get('/', 'CertificateController@readContract');
+});
 
 $router->group(['prefix' => 'certificate'], function () use ($router) {
     $router->get('/{hash}', 'CertificateController@read');
@@ -28,9 +33,14 @@ $router->group(['prefix' => 'certificate'], function () use ($router) {
 });
 
 
+
+$router->group(['prefix' => 'certifier/contract'], function () use ($router) {
+    $router->get('/', 'CertifierController@readContract');
+});
+
 $router->group(['prefix' => 'certifier'], function () use ($router) {
-    $router->get('/{hash}', 'CertifierController@read');
-    $router->get('/{hash}/institution', 'CertifierController@readInstitution');
+    $router->get('/{address}', 'CertifierController@read');
+    $router->get('/{address}/institution', 'CertifierController@getInstitution');
     $router->post('/', 'CertifierController@create');
-    $router->delete('/{hash}', 'CertifierController@remove');
+    $router->delete('/{address}', 'CertifierController@remove');
 });
