@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a176ea09f2faf30a2a5ca2ae5ef85ede",
+    "content-hash": "0f2a24e8f5120ad1271a2f0bebd8e0c1",
     "packages": [
         {
             "name": "brick/math",
@@ -5776,16 +5776,16 @@
         },
         {
             "name": "web3p/ethereum-tx",
-            "version": "dev-master",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web3p/ethereum-tx.git",
-                "reference": "8ac85cd7a21914821fc169fc1f24aa6fa198e5df"
+                "reference": "8dc1adc10ae45ac440c43ac32a3c5adf63ed8cef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web3p/ethereum-tx/zipball/8ac85cd7a21914821fc169fc1f24aa6fa198e5df",
-                "reference": "8ac85cd7a21914821fc169fc1f24aa6fa198e5df",
+                "url": "https://api.github.com/repos/web3p/ethereum-tx/zipball/8dc1adc10ae45ac440c43ac32a3c5adf63ed8cef",
+                "reference": "8dc1adc10ae45ac440c43ac32a3c5adf63ed8cef",
                 "shasum": ""
             },
             "require": {
@@ -5798,7 +5798,6 @@
             "require-dev": {
                 "phpunit/phpunit": "~7|~8.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5818,9 +5817,9 @@
             "description": "Ethereum transaction library in PHP.",
             "support": {
                 "issues": "https://github.com/web3p/ethereum-tx/issues",
-                "source": "https://github.com/web3p/ethereum-tx/tree/master"
+                "source": "https://github.com/web3p/ethereum-tx/tree/0.4.3"
             },
-            "time": "2021-12-28T14:11:01+00:00"
+            "time": "2021-09-01T05:13:20+00:00"
         },
         {
             "name": "web3p/ethereum-util",
@@ -8123,8 +8122,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "sc0vu/web3.php": 20,
-        "web3p/ethereum-tx": 20
+        "sc0vu/web3.php": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -8132,5 +8130,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }

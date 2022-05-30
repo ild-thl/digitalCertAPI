@@ -10,7 +10,31 @@ use Web3p\EthereumUtil\Util;
 
 class Controller extends BaseController
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
 
+    /**
+     * Get the url of an currently active blockchain node.
+     *
+     * @return string
+     */
+    public function readNode()
+    {
+        $node = SELF::get_node();
+
+        if(!isset($node)) {
+            return response('No node available', 404);
+        }
+
+        return response()->json(['url' => $node]);
+    }
 
     /**
      * Get the the smart contract for certificates.
@@ -19,7 +43,7 @@ class Controller extends BaseController
      */
     protected static function get_certificate_contract()
     {
-        if (app()->environment('local, staging, demo')) {
+        if (app()->environment('demo')) {
             return json_decode(file_get_contents(storage_path() . "/contracts/CertificateManagement.json"));
         }
 
@@ -34,7 +58,7 @@ class Controller extends BaseController
      */
     protected static function get_identity_contract()
     {
-        if (app()->environment('local, staging, demo')) {
+        if (app()->environment('demo')) {
             return json_decode(file_get_contents(storage_path() . "/contracts/IdentityManagement.json"));
         }
 
@@ -59,7 +83,7 @@ class Controller extends BaseController
      */
     protected static function get_contract_address($contract)
     {
-        return json_encode($contract->contract_address);
+        return $contract->contract_address;
     }
 
     /**
@@ -67,36 +91,38 @@ class Controller extends BaseController
      *
      * @return string
      */
-    protected static function get_blockchain_node()
+    protected static function get_node()
     {
         $nodes = config('app.blockchain_nodes');
         foreach ($nodes as $node) {
-            if (SELF::check_node($node)) {
+            if (SELF::check_node($node) === true) {
                 return $node;
             }
         }
-
-        return null;
     }
 
     /**
-     * Checks if the blockchain node identified by the given $url is active.
+     * Checks if the blockchain node identified by the given url is active.
      *
      * @param string $url
      * @return boolean True if the node is active, else false;
      */
     protected static function check_node($url)
     {
-        $web3 = new Web3(new HttpProvider(new HttpRequestManager($url, 30)));
         $success = false;
-        $web3->eth->blockNumber(function ($err, $blocknumber) use (&$success) {
-            if ($err === null) {
-                $block = $blocknumber->value;
-                if ($block > 0) {
-                    $success = true;
+        try {
+            $web3 = new Web3(new HttpProvider(new HttpRequestManager($url, 30)));
+            $web3->eth->blockNumber(function ($err, $blocknumber) use (&$success) {
+                if ($err === null) {
+                    $block = $blocknumber->value;
+                    if ($block > 0) {
+                        $success = true;
+                    }
                 }
-            }
-        });
+            });
+        } catch (\Exception $e) {
+            return false;
+        }
 
         return $success;
     }
