@@ -22,6 +22,10 @@ $router->get('/ping', function () {
 
 $router->get('/node', 'Controller@readNode');
 
+$router->get('/doc', function ()  {
+    return view('doc');
+});
+
 $router->group(['prefix' => 'certificate/contract'], function () use ($router) {
     $router->get('/', 'CertificateController@readContract');
 });
@@ -31,8 +35,6 @@ $router->group(['prefix' => 'certificate'], function () use ($router) {
     $router->post('/', 'CertificateController@create');
     $router->delete('/{hash}', 'CertificateController@revoke');
 });
-
-
 
 $router->group(['prefix' => 'certifier/contract'], function () use ($router) {
     $router->get('/', 'CertifierController@readContract');
